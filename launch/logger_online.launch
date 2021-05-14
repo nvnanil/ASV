@@ -1,6 +1,6 @@
 <launch>
 
-<arg name="bag.name" default="/home/cataboat-1/catabot"/>
+<arg name="bag.name" default="/home/cataboat-2/catabot"/>
 <arg name="bag.topics"
      default=
      "

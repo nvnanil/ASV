@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package>
-  <name>cataboat_bringup</name>
+  <name>catabot_bringup</name>
   <version>1.0.0</version>
   <description>The bluerov_bringup package to start necessary nodes for the bluerov.</description>
 
