@@ -3,6 +3,7 @@
 from __future__ import print_function
 import rospy
 import mavros
+import time
 
 from mavros_msgs.srv import *
 from mavros.utils import *
@@ -26,6 +27,8 @@ class Catabot:
         self.publisher_compass_turn = rospy.Publisher("/catabot/compass_turn/time", Float64, queue_size=10)
         self.right_motor = 1500
         self.left_motor = 1500
+        self.right_motor_t = 1500
+        self.left_motor_t = 1500
 
     def callback_compass(self, msg):
         if self.initial_heading is not None:
@@ -97,7 +100,7 @@ class Catabot:
             left_motor = 1200
         elif self.direction_input == 2:
             right_motor = 1390
-            left_motor =1610
+            left_motor =16for_t
         elif self.direction_input == 3:
             right_motor = 1800
             left_motor = 1250
@@ -108,22 +111,53 @@ class Catabot:
             right_motor = 1500
             left_motor = 1500
         '''
-        if right_input and left_input:
-            self.right_motor = right_input
-            self.left_motor = left_input
+        self.right_motor = 1550
+        self.left_motor = 1550
+        self.right_motor_t = 1550
+        self.left_motor_t = 1450
+        for_t = 10
+        turn_t = 4
 
         try:
-            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong)
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #square pattern
             servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor)
             servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor)
-            #servo_right_msg = Float64()
-            #servo_left_msg = Float64()
-            #servo_right_msg.data = right_motor
-            #servo_left_msg.data = left_motor
-            #self.publisher_right.publish(servo_right_msg)
-            #self.publisher_left.publish(servo_left_msg)
-            print("SERVO RIGHT: ", self.right_motor, "/", "SERVO LEFT", self.left_motor)
-
+            servo_right_msg = Float64()
+            servo_left_msg = Float64()
+            servo_right_msg.data = self.right_motor
+            servo_left_msg.data = self.left_motor
+            self.publisher_right.publish(servo_right_msg)
+            self.publisher_left.publish(servo_left_msg)
+            #print("SERVO RIGHT: ", self.right_motor, "/", "SERVO LEFT", self.left_motor)
+            rospy.sleep(for_t)
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #first turn
+            servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor_t)
+            servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor_t)
+            rospy.sleep(turn_t)
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) 
+            servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor)
+            servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor)
+            rospy.sleep(for_t)
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #second turn
+            servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor_t)
+            servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor_t)
+            rospy.sleep(turn_t)
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) 
+            servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor)
+            servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor)
+            rospy.sleep(for_t)
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #third turn
+            servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor_t)
+            servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor_t)
+            rospy.sleep(turn_t)
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) 
+            servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor)
+            servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor)
+            rospy.sleep(for_t)
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #fourth turn
+            servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor_t)
+            servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor_t)
+            rospy.sleep(turn_t)
         except rospy.ServiceException as e:
             print("Service servo control call failed: ", e)
 
@@ -138,43 +172,40 @@ class Catabot:
         except rospy.ServiceException as e:
             print("Service servo control call failed: ", e)
 
-    def stopwatch(self):
-        if self.start_time is None:
-            self.start_time = timer()
+    def forward(self):
             self.setArm()
             print("Robot armed / start moving")
             self.myController_start()
-
-        else:
-            current_time = timer()
-            if current_time - self.start_time > self.TEST_TIME:
-                self.setDisarm()
-                self.myController_stop()
-                print("test finished")
-                rospy.signal_shutdown("End") 
-
+            self.myController_stop()
+            self.setDisarm()
+            #self.myController_stop()
+            print("Test finished")
+            rospy.signal_shutdown("End") 
 
 def main():
+   '''
    global right_input, left_input
    right_input = input("Right_motor PWM: ")
    left_input = input("left_motor PWM: ")
    # direction_input= input("Direction for test - 1: Forward / 2: Backward / 3: Right / 4: Left ")
    TEST_TIME = input("How many seconds?: ")
+   '''
    catabot = Catabot()
    #catabot.direction_input = direction_input
-   catabot.TEST_TIME = TEST_TIME
+   #catabot.TEST_TIME = TEST_TIME
    while not rospy.is_shutdown():
+       '''
        servo_right_msg = Float64()
        servo_left_msg = Float64()
        servo_right_msg.data = catabot.right_motor
        servo_left_msg.data = catabot.left_motor
        catabot.publisher_right.publish(servo_right_msg)
        catabot.publisher_left.publish(servo_left_msg)
-       catabot.stopwatch()
+       '''
+       catabot.forward()
        catabot.rate.sleep()
 
 if __name__ == '__main__':
-   rospy.init_node('catabot_controller_node', anonymous=True)
+   rospy.init_node('square_controller_node', anonymous=True)
    #rospy.Subscriber("/mavros/global_position/compass_hdg", std_msgs/Float64, compassCallback)
-   #velocity_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size=10)
    main()

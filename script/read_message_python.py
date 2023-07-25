@@ -2,7 +2,7 @@
 
 import rosbag
 def main():
-    bag = rosbag.Bag('catabot_2019-09-24-20-53-28.bag')
+    bag = rosbag.Bag('catabot_2023-09-24-20-53-28.bag')
 
     for topic, msg, t in bag.read_messages(topics=['/mavros/imu/data']):
         print msg
