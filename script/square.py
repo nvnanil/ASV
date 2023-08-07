@@ -113,7 +113,7 @@ class Catabot:
         '''
         self.right_motor = 1550
         self.left_motor = 1550
-        self.right_motor_t = 1550
+        self.right_motor_t = 1450
         self.left_motor_t = 1450
         for_t = 10
         turn_t = 4
