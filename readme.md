@@ -3,9 +3,8 @@ Building an Autonomous Surface Vehicle (ASV) for smart sustainalble shellfish aq
 
 ## Installing the dependencies
 *To install MAVROS*
-```
 https://masoudir.github.io/mavros_tutorial/
-```
+
 
 ## Starting the ArduRover firmware
 *Connect the pixhawk via USB cable or telemetry*
