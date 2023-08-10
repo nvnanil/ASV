@@ -18,6 +18,6 @@ rosrun asv gps_nav_2.py
 ```
 *To execute a square pattern*
 ```
-rosrun asv_build square.py 
+rosrun asv square.py 
 ```
 
