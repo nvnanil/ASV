@@ -9,12 +9,12 @@ https://masoudir.github.io/mavros_tutorial/
 ## Starting the ArduRover firmware
 *Connect the pixhawk via USB cable or telemetry*
 ```
-roslaunch asv_build terpbot.launch 
+roslaunch asv terpbot.launch 
 ```
 ## ROS Control
 *To execute GPS aided autonomous navigation*
 ```
-rosrun asv_build gps_nav_2.py 
+rosrun asv gps_nav_2.py 
 ```
 *To execute a square pattern*
 ```
