@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # encoding=utf8
 from __future__ import print_function
 import rospy
@@ -111,12 +111,12 @@ class Catabot:
             right_motor = 1500
             left_motor = 1500
         '''
-        self.right_motor = 1550
-        self.left_motor = 1550
-        self.right_motor_t = 1450
-        self.left_motor_t = 1450
+        self.right_motor = 1350
+        self.left_motor = 1350
+        self.right_motor_t = 1400
+        self.left_motor_t = 1600
         for_t = 10
-        turn_t = 4
+        turn_t = 3
 
         try:
             servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #square pattern
@@ -128,31 +128,38 @@ class Catabot:
             servo_left_msg.data = self.left_motor
             self.publisher_right.publish(servo_right_msg)
             self.publisher_left.publish(servo_left_msg)
+            print("moving forward")
             #print("SERVO RIGHT: ", self.right_motor, "/", "SERVO LEFT", self.left_motor)
             rospy.sleep(for_t)
             servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #first turn
             servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor_t)
             servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor_t)
+            print("taking turn")
             rospy.sleep(turn_t)
-            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) 
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong)
             servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor)
             servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor)
+            print("moving forward")
             rospy.sleep(for_t)
             servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #second turn
             servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor_t)
             servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor_t)
+            print("taking turn")
             rospy.sleep(turn_t)
-            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) 
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong)
             servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor)
             servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor)
+            print("moving forward")
             rospy.sleep(for_t)
             servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #third turn
             servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor_t)
             servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor_t)
+            print("taking turn")
             rospy.sleep(turn_t)
-            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) 
+            servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong)
             servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor)
             servoControlService(command = 183, param1 = 3.0, param2 = self.left_motor)
+            print("moving forward")
             rospy.sleep(for_t)
             servoControlService = rospy.ServiceProxy('/mavros/cmd/command', mavros_msgs.srv.CommandLong) #fourth turn
             servoControlService(command = 183, param1 = 1.0, param2 = self.right_motor_t)
@@ -180,7 +187,7 @@ class Catabot:
             self.setDisarm()
             #self.myController_stop()
             print("Test finished")
-            rospy.signal_shutdown("End") 
+            rospy.signal_shutdown("End")
 
 def main():
    '''
