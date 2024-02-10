@@ -13,7 +13,7 @@ https://masoudir.github.io/mavros_tutorial/ <br>
 roslaunch asv terpbot.launch 
 ```
 ## ROS Control
-*To execute GPS aided autonomous navigation. Edit the code to enter the required waypoints for navigation and then run*
+*To execute GPS aided autonomous navigation. Edit the code to enter the required waypoints for navigation and then*
 ```
 rosrun asv gps_nav_2.py 
 ```
