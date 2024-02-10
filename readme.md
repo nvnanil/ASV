@@ -2,22 +2,27 @@
 Building an Autonomous Surface Vehicle (ASV) for smart sustainalble shellfish aquaculture management
 ![](ASV.jpeg)
 ## Installing the dependencies
-*To install MAVROS*
-https://masoudir.github.io/mavros_tutorial/
-
-
+*MAVROS:*
+*to install MAVROS*
+https://masoudir.github.io/mavros_tutorial/ <br>
+*ROS Noetic*<br>
+*Python3 (recommended)*
 ## Starting the ArduRover firmware
 *Connect the pixhawk via USB cable or telemetry*
 ```
 roslaunch asv terpbot.launch 
 ```
 ## ROS Control
-*To execute GPS aided autonomous navigation*
+*To execute GPS aided autonomous navigation. Edit the code to enter the required waypoints for navigation and then run*
 ```
 rosrun asv gps_nav_2.py 
 ```
-*To execute a square pattern*
+*To execute a square pattern in guided mode*
 ```
-rosrun asv square.py 
+rosrun asv guided.py 
+```
+*To execute a lawnmover pattern in guided mode*
+```
+rosrun asv guided_lawn.py 
 ```
 
