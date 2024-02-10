@@ -89,7 +89,7 @@ def move_in_shape():
     stop()
     forward(30, 2)
     stop()
-    #disarmingCall()
+    disarmingCall()
 
 if __name__ == '__main__':
     try:
