@@ -1,6 +1,6 @@
 # Autonomous Surface Vehicle (ASV)
 Building an Autonomous Surface Vehicle (ASV) for smart sustainalble shellfish aquaculture management
-
+![](ASV.jpeg)
 ## Installing the dependencies
 *To install MAVROS*
 https://masoudir.github.io/mavros_tutorial/
